@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="profile-header">
+    <h1>{{ request.user.username }}'s Profile</h1>
+    <p>Credits: <strong>{{ request.user.profile.credits }}</strong></p>
+</div>
+
+<div class="profile-section">
+    <h2>Edit Profile</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ pform.as_p }}
+        <button type="submit" class="btn">Save Changes</button>
+    </form>
+</div>
+
+<div class="profile-posts">
+    <h2>My Posts</h2>
+    {% if my_posts %}
+        <div class="posts-grid">
+            {% for post in my_posts %}
+            <div class="post-card {% if post.kind == 'OFFER' %}offer-bg{% else %}request-bg{% endif %}">
+                <div class="post-kind {% if post.kind == 'OFFER' %}offer{% else %}request{% endif %}">
+                    {{ post.get_kind_display }}
+                </div>
+                <div class="post-content">
+                    <h3>{{ post.skill.name }}</h3>
+                    <p>{{ post.description }}</p>
+                    <small>{{ post.created_at|timesince }} ago</small>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>You haven't posted any skills yet.</p>
+    {% endif %}
+</div>
+
+<style>
+.profile-header { margin-bottom: 20px; }
+.profile-header h1 { font-size: 28px; }
+.profile-header p { font-size: 18px; color: #007bff; }
+
+.profile-section { margin-bottom: 30px; }
+.profile-section h2 { font-size: 22px; margin-bottom: 10px; }
+.btn { background: #007bff; color: #fff; padding: 6px 12px; border-radius: 4px; border: none; cursor: pointer; }
+.btn:hover { background: #0056b3; }
+
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+}
+.post-card {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.offer-bg { background: #e6fffa; }
+.request-bg { background: #fff7e6; }
+.post-kind { font-weight: bold; margin-bottom: 8px; }
+.offer { color: #009688; }
+.request { color: #ff9800; }
+</style>
+
+{% endblock %}

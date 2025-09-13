@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <h2>Matches</h2>
+
+  <h3>Incoming Requests</h3>
+  {% for mr in incoming %}
+    <div style="border:1px solid #eee;padding:10px;border-radius:8px;margin-bottom:8px;">
+      <p><strong>@{{ mr.from_user.username }}</strong> wants to connect on <strong>{{ mr.skill.name }}</strong></p>
+      <form method="post" action="{% url 'accept_match' mr.id %}" style="display:inline-block;">
+        {% csrf_token %}
+        <button class="btn" type="submit">Accept</button>
+      </form>
+      <form method="post" action="{% url 'reject_match' mr.id %}" style="display:inline-block;margin-left:8px;">
+        {% csrf_token %}
+        <button class="btn secondary" type="submit">Reject</button>
+      </form>
+    </div>
+  {% empty %}
+    <p>No incoming requests.</p>
+  {% endfor %}
+
+  <h3>Outgoing Requests</h3>
+  {% for mr in outgoing %}
+    <div style="border:1px solid #eee;padding:10px;border-radius:8px;margin-bottom:8px;">
+      <p>To <strong>@{{ mr.to_user.username }}</strong> — <strong>{{ mr.skill.name }}</strong> — Status: {{ mr.status }}</p>
+    </div>
+  {% empty %}
+    <p>No outgoing requests.</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SkillSwap Hub</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/modern-normalize/modern-normalize.min.css" rel="stylesheet">
+  <style>
+    /* Simple layout + minimal styling for quick demo */
+    body { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin:0; padding:0; background:#f6f8fa; color:#222; }
+    header { background:#0b7285; color:white; padding:12px 20px; display:flex; justify-content:space-between; align-items:center; }
+    .logo { font-weight:700; font-size:1.2rem; }
+    nav a { color:white; margin-left:14px; text-decoration:none; }
+    main { max-width:1000px; margin:24px auto; padding:0 16px; }
+    .flash { margin:10px 0; padding:10px; border-radius:6px; background:#e9f7ef; color:#0b662d; }
+    footer { text-align:center; padding:18px 8px; color:#666; font-size:0.9rem; margin-top:32px; }
+    .btn { background:#0b7285; color:white; padding:8px 12px; border:none; border-radius:6px; cursor:pointer; }
+    .btn.secondary { background:#6c757d; }
+    .container { background:white; padding:16px; border-radius:8px; box-shadow:0 6px 18px rgba(20,20,20,0.04); }
+  </style>
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <header>
+    <div class="logo"><a href="{% url 'feed' %}" style="color:inherit;text-decoration:none">SkillSwap Hub</a></div>
+    <nav>
+      {% if user.is_authenticated %}
+        <span style="margin-right:8px;">Hi, {{ user.username }}</span>
+        <a href="{% url 'post_create' %}">New Post</a>
+        <a href="{% url 'matches' %}">Matches</a>
+        <a href="{% url 'sessions' %}">Sessions</a>
+        <a href="{% url 'profile' %}">Profile</a>
+        <a href="{% url 'logout' %}">Logout</a>
+      {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main>
+    {% for message in messages %}
+      <div class="flash container">{{ message }}</div>
+    {% endfor %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    SkillSwap © 2025 — A student project. Credits are virtual — no money involved.
+  </footer>
+</body>
+</html>

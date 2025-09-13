@@ -1,0 +1,149 @@
+/* GENERAL RESET */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f9f9f9;
+    color: #333;
+}
+
+/* NAVBAR */
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.nav .logo {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    transition: all 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    background: white;
+    color: #2575fc;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 0 10px rgba(255,255,255,0.7),
+                0 0 20px rgba(80,227,194,0.5);
+}
+
+/* CONTAINER */
+.container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* POST CARDS */
+.card {
+    background: white;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.card-body p {
+    margin: 0.5rem 0;
+}
+
+/* BUTTONS */
+button,
+input[type="submit"] {
+    background: #2575fc;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background: #1b5ed9;
+    transform: translateY(-2px);
+}
+
+/* MESSAGES */
+.messages {
+    margin: 1rem auto;
+    max-width: 800px;
+}
+.msg {
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+}
+.msg.success { background: #d4edda; color: #155724; }
+.msg.error { background: #f8d7da; color: #721c24; }
+.msg.info { background: #d1ecf1; color: #0c5460; }
+
+/* FOOTER (if you add one) */
+footer {
+    background: linear-gradient(90deg, #2575fc, #6a11cb);
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
+}
+
+/* ANIMATION (optional subtle fade-in for main content) */
+main.container {
+    animation: fadeIn 0.6s ease-in;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.hero {
+    text-align: center;
+    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    color: white;
+    padding: 3rem 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+.hero p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    margin: 0;
+}
+.offer-bg {
+    background: #e6fffa;  /* light teal */
+}
+
+.request-bg {
+    background: #fff7e6;  /* light orange */
+}
+

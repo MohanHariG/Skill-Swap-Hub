@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <h2>Create a Skill Post</h2>
+  <form method="post" style="display:grid;gap:10px;">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <label>Skill</label>
+    {{ form.skill }}
+
+    <label>Description</label>
+    {{ form.description }}
+
+    <label>Kind</label>
+    {{ form.kind }}
+
+    <div style="display:flex;gap:8px;margin-top:8px;">
+      <button class="btn" type="submit">Publish</button>
+    </div>
+  </form>
+
+  <hr style="margin:18px 0;">
+  <h3>Add a new Skill</h3>
+  <form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="add_skill" value="1" />
+    {{ skill_form.name.label_tag }} {{ skill_form.name }}
+    {{ skill_form.category.label_tag }} {{ skill_form.category }}
+    <div style="margin-top:8px;">
+      <button class="btn" type="submit">Add Skill</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

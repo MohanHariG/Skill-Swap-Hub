@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="feed-header">
+    <h1>SkillSwap Hub</h1>
+    <p>Connect, Share, and Learn New Skills</p>
+</div>
+
+<div class="feed-filters">
+    <form method="get">
+        <input type="text" name="q" value="{{ q }}" placeholder="Search skills..." />
+        <select name="kind">
+            <option value="">All</option>
+            <option value="OFFER" {% if kind == 'OFFER' %}selected{% endif %}>Offers</option>
+            <option value="REQUEST" {% if kind == 'REQUEST' %}selected{% endif %}>Requests</option>
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+</div>
+
+<div class="posts-grid">
+    {% for post in posts %}
+    <div class="post-card {% if post.kind == 'OFFER' %}offer-bg{% else %}request-bg{% endif %}" data-skill="{{ post.skill.name }}">
+        <div class="post-kind {% if post.kind == 'OFFER' %}offer{% else %}request{% endif %}">
+            {{ post.get_kind_display }}
+        </div>
+        <div class="post-content">
+            <div class="post-icon"></div>
+            <h3>{{ post.skill.name }}</h3>
+            <p>{{ post.description }}</p>
+            <small>By @{{ post.user.username }} | {{ post.created_at|timesince }} ago</small>
+        </div>
+        <div class="post-action">
+            <form method="post" action="{% url 'connect' post.id %}" class="connect-form">
+                {% csrf_token %}
+                <button class="connect-btn" type="submit">Connect</button>
+            </form>
+        </div>
+    </div>
+    {% empty %}
+    <p>No posts available.</p>
+    {% endfor %}
+</div>
+
+<div class="feed-footer">
+    <p>SkillSwap © 2025 — Learn & Share Together</p>
+</div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const icons = {
+        "Python": "code",
+        "SQL": "database",
+        "Django": "layers",
+        "HTML": "file-text",
+        "CSS": "palette",
+        "JavaScript": "file-code",
+        "React": "zap",
+        "Machine Learning": "cpu",
+        "Data Analysis": "bar-chart",
+        "Git & GitHub": "git-branch"
+    };
+
+    document.querySelectorAll(".post-card").forEach(card => {
+        const skill = card.dataset.skill;
+        const iconName = icons[skill] || "star";
+        const iconDiv = card.querySelector(".post-icon");
+        iconDiv.innerHTML = `<i data-lucide="${iconName}" class="pulse-icon"></i>`;
+        lucide.createIcons();
+    });
+});
+</script>
+
+<style>
+.feed-header { text-align: center; margin-bottom: 20px; }
+.feed-filters { margin-bottom: 20px; text-align: center; }
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+}
+.post-card {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.offer-bg { background: #e6fffa; }
+.request-bg { background: #fff7e6; }
+.post-kind { font-weight: bold; margin-bottom: 8px; }
+.offer { color: #009688; }
+.request { color: #ff9800; }
+.connect-btn { padding: 6px 12px; border: none; border-radius: 4px; background: #007bff; color: #fff; cursor: pointer; }
+.connect-btn:hover { background: #0056b3; }
+.feed-footer { text-align: center; margin-top: 30px; color: #777; }
+</style>
+
+{% endblock %}
