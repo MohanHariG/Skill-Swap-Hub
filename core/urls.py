@@ -1,5 +1,8 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('', views.feed, name='feed'),
@@ -13,4 +16,4 @@ urlpatterns = [
     path('matches/accept/<int:pk>/', views.accept_match, name='accept_match'),
     path('matches/reject/<int:pk>/', views.reject_match, name='reject_match'),
     path('sessions/', views.sessions_view, name='sessions'),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
